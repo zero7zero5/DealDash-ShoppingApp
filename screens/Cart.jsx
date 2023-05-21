@@ -5,19 +5,20 @@ import AppButton from "./../components/Button";
 import AuthContext from "../context/AuthContext";
 import api from "./../api/api";
 import { ToastAndroid } from "react-native";
-
+import { useIsFocused } from "@react-navigation/native";
 const Cart = ({ navigation }) => {
   const context = useContext(AuthContext);
   const [cart, setCart] = useState([]);
   const [cost, setCost] = useState(0);
   const [refreshing, onRefreshing] = useState(false);
+  const isFocused = useIsFocused();
   async function getCartItems() {
     const result = await api.get(`user/${context.user._id}/cart`);
     setCart(result.data);
   }
   useEffect(() => {
     getCartItems();
-  }, []);
+  }, [isFocused]);
   useEffect(() => {
     let sum = 0;
     cart.forEach((i) => (sum += i.cost));
@@ -30,10 +31,10 @@ const Cart = ({ navigation }) => {
   };
   const order = async () => {
     if (cart.length === 0)
-      ToastAndroid.show("Cart is empty", ToastAndroid.SHORT);
-    // const result = await api.post(`user/${context.user._id}/orders`, {
-    //   cart: cart,
-    // });
+      return ToastAndroid.show("Cart is empty", ToastAndroid.SHORT);
+    const { data } = await api.get(`user/${context.user._id}/orders`);
+    const newCart = cart.concat(data);
+    await api.put(`user/${context.user._id}/orders`, { items: newCart });
     ToastAndroid.show("Ordered Placed successfully", ToastAndroid.SHORT);
   };
   return (
@@ -81,7 +82,7 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: "#fdf1f3",
     paddingTop: StatusBar.currentHeight,
-    paddingHorizontal: 20,
+    paddingHorizontal: 10,
   },
   heading: {
     fontSize: 30,

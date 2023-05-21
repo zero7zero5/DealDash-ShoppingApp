@@ -5,6 +5,7 @@ import {
   Text,
   ImageBackground,
   Pressable,
+  Dimensions,
 } from "react-native";
 import IconContainer from "./IconContainer";
 const Card = ({ image, title, subtitle, onPress }) => {
@@ -34,7 +35,7 @@ const Card = ({ image, title, subtitle, onPress }) => {
 
 const styles = StyleSheet.create({
   container: {
-    width: 167,
+    width: Dimensions.get("window").width / 2.3,
     margin: 10,
   },
   image: {

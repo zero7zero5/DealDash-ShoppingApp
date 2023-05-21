@@ -7,6 +7,7 @@ import api from "../api/api";
 import { FlatList } from "react-native-gesture-handler";
 import AuthContext from "../context/AuthContext";
 import BadgeList from "../components/BadgeList";
+import { useNavigation } from "@react-navigation/native";
 const category = [
   { genre: "All", id: 5 },
   { genre: "electronics", id: 1 },
@@ -14,12 +15,13 @@ const category = [
   { genre: "jwellery", id: 3 },
   { genre: "men's clothing", id: 4 },
 ];
-const Home = ({ navigation }) => {
+const Home = () => {
   const user = useContext(AuthContext);
   const [data, setData] = useState([]);
   const [newData, setNewData] = useState([]);
   const [search, setSearch] = useState("");
   const [currentCategory, setCategory] = useState("All");
+  const navigation = useNavigation();
   async function getProucts() {
     const res = await api.get("/product");
     setData(res.data);
@@ -92,7 +94,7 @@ const styles = StyleSheet.create({
     paddingTop: StatusBar.currentHeight,
     paddingBottom: 290,
     backgroundColor: "#fdf1f3",
-    paddingHorizontal: 25,
+    paddingHorizontal: 10,
   },
   header: {
     flexDirection: "row",

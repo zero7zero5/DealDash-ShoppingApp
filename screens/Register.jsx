@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { View, StyleSheet, Text } from "react-native";
+import { View, StyleSheet, Text, ToastAndroid } from "react-native";
 import Input from "./../components/Input";
 import { Image } from "react-native";
 import AppButton from "./../components/Button";
@@ -19,7 +19,10 @@ const Register = ({ navigation }) => {
   const handleSubmit = async (user) => {
     const result = await api.post("user", user);
     if (!result.ok)
-      return setError("User Already Registered or Some error has occured");
+      return ToastAndroid.show(
+        "User Already Registered or Some error has occured",
+        ToastAndroid.SHORT
+      );
     navigation.navigate("Login");
   };
   return (

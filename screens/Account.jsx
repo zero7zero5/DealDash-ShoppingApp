@@ -2,7 +2,7 @@ import React, { useContext } from "react";
 import { View, Text, StyleSheet, StatusBar, Pressable } from "react-native";
 import IconContainer from "../components/IconContainer";
 import AuthContext from "../context/AuthContext";
-const Account = () => {
+const Account = ({ navigation }) => {
   const context = useContext(AuthContext);
   return (
     <View style={styles.container}>
@@ -35,26 +35,32 @@ const Account = () => {
             My Listings
           </Text>
         </View>
-        <View style={[styles.logout, { marginVertical: 5 }]}>
-          <IconContainer
-            style={{ backgroundColor: "#00b8e6" }}
-            name={"cart"}
-            size={25}
-            width={50}
-            color="white"
-          />
-          <Text style={{ paddingHorizontal: 25, fontSize: 20 }}>Cart</Text>
-        </View>
-        <View style={[styles.logout, { marginVertical: 5 }]}>
-          <IconContainer
-            style={{ backgroundColor: "#8800cc" }}
-            name={"cube-outline"}
-            size={25}
-            width={50}
-            color="white"
-          />
-          <Text style={{ paddingHorizontal: 25, fontSize: 20 }}>My Orders</Text>
-        </View>
+        <Pressable onPress={() => navigation.navigate("Cart")}>
+          <View style={[styles.logout, { marginVertical: 5 }]}>
+            <IconContainer
+              style={{ backgroundColor: "#00b8e6" }}
+              name={"cart"}
+              size={25}
+              width={50}
+              color="white"
+            />
+            <Text style={{ paddingHorizontal: 25, fontSize: 20 }}>Cart</Text>
+          </View>
+        </Pressable>
+        <Pressable onPress={() => navigation.navigate("MyOrders")}>
+          <View style={[styles.logout, { marginVertical: 5 }]}>
+            <IconContainer
+              style={{ backgroundColor: "#8800cc" }}
+              name={"cube-outline"}
+              size={25}
+              width={50}
+              color="white"
+            />
+            <Text style={{ paddingHorizontal: 25, fontSize: 20 }}>
+              My Orders
+            </Text>
+          </View>
+        </Pressable>
       </View>
       <Pressable onPress={() => context.setUser("")}>
         <View style={styles.logout}>

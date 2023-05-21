@@ -1,5 +1,5 @@
 import { create } from "apisauce";
 const api = create({
-  baseURL: "http://192.168.10.129:3000/ecommerce/api/",
+  baseURL: "https://deal-dash-backend.vercel.app/ecommerce/api/",
 });
 export default api;

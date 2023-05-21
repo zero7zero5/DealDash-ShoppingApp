@@ -1,5 +1,5 @@
 import React, { useContext, useState } from "react";
-import { View, StyleSheet, Text } from "react-native";
+import { View, StyleSheet, Text, ToastAndroid } from "react-native";
 import Input from "./../components/Input";
 import { Image } from "react-native";
 import AppButton from "./../components/Button";
@@ -15,7 +15,12 @@ const Login = () => {
   const [error, setError] = useState();
   const handleSubmit = async (user) => {
     const result = await api.post("auth", user);
-    if (!result.ok) return setError("Invalid username or password");
+    if (!result.ok) {
+      return ToastAndroid.show(
+        "Invalid username or password or Some error has occured",
+        ToastAndroid.SHORT
+      );
+    }
     authContext.setUser(jwt_decode(result.data));
   };
   const validationSchema = Yup.object({
